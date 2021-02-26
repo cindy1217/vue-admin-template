@@ -1,7 +1,19 @@
 <template>
   <div class="dashboard-container">
-    hello info component
+     <ul>
+       <li v-for="(item,index) in lists" 
+        @click="choose(index)"
+        :class="{active: index == current && current !==''}"
+        :key="index">
+         {{item}}
+       </li>
+     </ul>
     <button type="button" @click="add()">添加</button>
+    <ul>
+      <li v-for="(item,index) in target" :key="index">
+        {{item}}
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -9,22 +21,28 @@
 
 export default {
   name: 'Customer',
+  data(){
+      return{
+        current: '',
+        lists:[1,2,3,4,5,6,7,8,9],
+        target:[]
+      }
+  },
   methods:{
+    choose(index){
+        this.current = index
+    },
     add(){
-      alert('addd hhf ')
+      if(this.current === ''){return}
+      this.target.push(this.lists[this.current])
+      this.current = ''
     }
   }
 } 
 </script>
 
 <style lang="scss" scoped>
-.dashboard {
-  &-container {
-    margin: 30px;
-  }
-  &-text {
-    font-size: 30px;
-    line-height: 46px;
-  }
+li.active{
+  background: green;
 }
 </style>
